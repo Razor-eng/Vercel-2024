@@ -40,7 +40,7 @@ export default function AddProjectModal({ userName, fetchData }: Props) {
             <DialogTrigger asChild>
                 <p className='transition-all ease-in duration-150 cursor-pointer hover:bg-zinc-100 hover:dark:bg-zinc-800 py-2 px-2 rounded-[4px]'>Project</p>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] h-[50%] dark:bg-[#0A0A0A] border-zinc-200 dark:border-zinc-800">
+            <DialogContent className="sm:max-w-[425px] h-[50%] bg-white dark:bg-[#0A0A0A] border-zinc-200 dark:border-zinc-800">
                 <DialogHeader>
                     <DialogTitle>Add Project</DialogTitle>
                 </DialogHeader>
