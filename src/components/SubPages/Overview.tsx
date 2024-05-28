@@ -18,6 +18,7 @@ import AddModal from "../Modal/AddModal";
 import AddProjectModal from "../Modal/AddProjectModal";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/app/firebase";
+import OutlineButton from "../Buttons/OutlineButton";
 
 type Props = {
     loading?: boolean,
@@ -168,10 +169,16 @@ export default function Overview({ loading, userName, email }: Props) {
                     </div>)
                 :
                 Projects.length == 0 && (
-                    <div className="flex text-sm items-center justify-center mt-40">
+                    <div className="flex flex-col gap-6 text-sm items-center justify-center mt-40">
                         <div className="flex flex-col gap-2 items-center">
                             <h2 className="font-semibold">Add a New Project</h2>
                             <p className="text-zinc-500">Click on Add New and create a new project</p>
+                        </div>
+                        <div className="relative">
+                            <div className="opacity-0 absolute w-36 h-16">
+                                <AddProjectModal userName={userName} fetchData={fetchData} />
+                            </div>
+                            <OutlineButton title={'Add Project'} className="px-6 py-2 bg-white dark:!text-black" />
                         </div>
                     </div>)
             }
