@@ -1,7 +1,7 @@
 "use client";
 import Footer from '@/components/Footer/Footer'
 import { ArrowRight } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiShare1 } from 'react-icons/ci';
 import { FaBitbucket, FaGithub, FaGitlab } from 'react-icons/fa';
 import Header from '../components/AuthHeader/Header';
@@ -9,7 +9,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '@/app/firebase';
 import { useRouter } from 'next/navigation';
 import { IoClose } from 'react-icons/io5';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
 type Props = {}
@@ -27,12 +27,13 @@ export default function Signup({ }: Props) {
     const [name, setName] = useState('');
     const [next, setNext] = useState(false);
     const [signup, setSignup] = useState(false);
+    const [nameExist, setNameExist] = useState(false);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const checkName = () => {
-        if (name.length > 4 && !name.includes(' ') && !name.match(/^[^a-zA-Z0-9]+$/)) {
+        if (name.length > 4 && !name.includes(' ') && !name.match(/^[^a-zA-Z0-9]+$/) && !nameExist) {
             setAlert(false);
             setNext(true)
         }
@@ -68,6 +69,23 @@ export default function Signup({ }: Props) {
             }, 1000);
         }
     }
+
+    useEffect(() => {
+        const nameExists = async () => {
+            setNameExist(false);
+            (await getDocs(collection(db, 'users'))).docs.map(doc => {
+                if (doc.data().userName.toLowerCase().split('-').join('') === name.toLowerCase().split('-').join(''))
+                    setNameExist(true);
+            })
+        }
+
+        if (name) {
+            nameExists();
+        }
+        if (name === '') {
+            setNameExist(false);
+        }
+    }, [name]);
 
     return (
         <div className='h-screen flex flex-col w-screen dark:bg-black'>
@@ -155,8 +173,9 @@ export default function Signup({ }: Props) {
                                 </div>
                                 <div className="flex flex-col gap-4">
                                     <div className={`flex flex-col gap-2 items-start ${selected ? 'opacity-100' : 'opacity-0 h-0'}`}>
+                                        <p className={`text-red-500 h-fit ${nameExist ? 'opacity-100' : 'opacity-0'}`}>Username is taken, try another</p>
                                         <p className="text-zinc-500 text-sm">
-                                            {selected === 'Hobby' ? 'Your' : 'Team'} Name
+                                            {selected === 'Hobby' ? 'Your' : 'Team'} UserName
                                         </p>
                                         <input
                                             type="text"

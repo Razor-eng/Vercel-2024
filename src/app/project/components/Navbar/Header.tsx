@@ -55,9 +55,11 @@ export default function Header({ title, email }: Props) {
                         <hr className='rotate-[120deg] w-5 border-zinc-300 dark:border-zinc-700' />
                     </div>
                     <div className="flex items-center gap-2 ml-2">
-                        <div className="p-1 rounded-full bg-black text-white">
-                            <IoLogoVercel />
-                        </div>
+                        <Link href={'/'}>
+                            <div className="p-1 rounded-full bg-black text-white">
+                                <IoLogoVercel />
+                            </div>
+                        </Link>
                         <h2 className="text-[14px] font-[500]">{title}</h2>
                         <button className="hover:bg-zinc-200 text-zinc-500 dark:text-zinc-300 hover:text-black dark:hover:text-white dark:hover:bg-zinc-800 py-2 px-1 rounded-lg transition-all ease-in duration-150">
                             <PiCaretUpDownLight />

@@ -35,7 +35,9 @@ export default function Overview({ loading, userName, email }: Props) {
 
     const fetchData = async () => {
         setProjects([]);
-        (await getDocs(collection(db, 'projects'))).docs.sort((a, b) => (sortby === 'activity' ? b.data().addedOn - a.data().addedOn : a.data().projectName.localeCompare(b.data().projectName))).filter((project: any) => {
+        (await getDocs(collection(db, 'projects'))).docs.filter(doc => {
+            return doc.data().addedBy === userName
+        }).sort((a, b) => (sortby === 'activity' ? b.data().addedOn - a.data().addedOn : a.data().projectName.localeCompare(b.data().projectName))).filter((project: any) => {
             return project.data().projectName.toLowerCase().includes(searchTerm.toLowerCase())
         }).map(data => {
             setProjects((prev: any) => [...prev, data.data()])
@@ -155,16 +157,25 @@ export default function Overview({ loading, userName, email }: Props) {
                         </div>
                 )
             }
-            {(searchTerm && Projects.length == 0) &&
-                <div className="flex flex-col gap-6 text-sm items-center justify-center mt-20">
-                    <div className="flex flex-col gap-2 items-center">
-                        <h2 className="font-semibold">No Results Found</h2>
-                        <p className="text-zinc-500">Your search for {`"${searchTerm}"`} did not return any results</p>
-                    </div>
-                    <p className="text-blue-500 hover:underline cursor-pointer transition-all ease-in duration-100 underline-offset-4" onClick={() => setSearchTerm('')}>New Project</p>
-                </div>
+            {searchTerm ?
+                Projects.length == 0 && (
+                    <div className="flex flex-col gap-6 text-sm items-center justify-center mt-20">
+                        <div className="flex flex-col gap-2 items-center">
+                            <h2 className="font-semibold">No Results Found</h2>
+                            <p className="text-zinc-500">Your search for {`"${searchTerm}"`} did not return any results</p>
+                        </div>
+                        <p className="text-blue-500 hover:underline cursor-pointer transition-all ease-in duration-100 underline-offset-4" onClick={() => setSearchTerm('')}>New Project</p>
+                    </div>)
+                :
+                Projects.length == 0 && (
+                    <div className="flex text-sm items-center justify-center mt-40">
+                        <div className="flex flex-col gap-2 items-center">
+                            <h2 className="font-semibold">Add a New Project</h2>
+                            <p className="text-zinc-500">Click on Add New and create a new project</p>
+                        </div>
+                    </div>)
             }
-            <AddModal open={addNew} setOpen={setOpen} />
+            <AddModal open={addNew} setOpen={setOpen} fetchData={fetchData} />
         </div>
     )
 }
