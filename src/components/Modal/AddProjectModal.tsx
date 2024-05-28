@@ -60,7 +60,7 @@ export default function AddProjectModal({ userName, fetchData }: Props) {
                 </div>
                 <DialogFooter>
                     <div className="w-full" onClick={submit}>
-                        <Button title='Add Project' className='' />
+                        <Button title='Add Project' className='!bg-black text-white dark:text-black dark:!bg-white' />
                     </div>
                 </DialogFooter>
             </DialogContent>
