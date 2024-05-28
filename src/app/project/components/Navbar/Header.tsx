@@ -78,7 +78,6 @@ export default function Header({ title, email }: Props) {
                             <FiBell />
                             <div className="absolute bg-blue-500 w-2 h-2 rounded-full top-[1px] right-0"></div>
                         </button>
-                        {/* <Image src={'/rglobe.svg'} height={30} width={30} alt='globe' className='rounded-full cursor-pointer hidden md:block' /> */}
                         <Logout email={email} />
                         <button
                             className='border-zinc-100 relative dark:border-zinc-900 text-zinc-500 hover:bg-zinc-100 hover:dark:bg-zinc-900 hover:text-black dark:hover:text-white transition-all ease-in duration-100 border-2 text-[17px] rounded-[8px] p-1 font-[500] block md:hidden'

@@ -39,7 +39,7 @@ export default function Logout({ email }: Props) {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="min-w-64 dark:bg-[#0A0A0A] bg-white rounded-[7px] border-zinc-200 dark:border-zinc-800 mr-3 mt-3 px-2">
                 <DropdownMenuLabel className='py-2'>{email}</DropdownMenuLabel>
-                <DropdownMenuSeparator className='dark:bg-zinc-700' />
+                <DropdownMenuSeparator className='dark:bg-zinc-700 bg-zinc-300' />
                 <div className="flex text-sm flex-col gap-2 px-2 py-4">
                     <div className="flex justify-between items-center">
                         <p>Account Settings</p>
@@ -50,14 +50,14 @@ export default function Logout({ email }: Props) {
                         <FaPlus size={18} />
                     </div>
                 </div>
-                <DropdownMenuSeparator className='dark:bg-zinc-700' />
+                <DropdownMenuSeparator className='dark:bg-zinc-700 bg-zinc-300' />
                 <div onClick={signout} className="gap-2 font-semibold py-2 flex items-center justify-center bg-zinc-200 dark:bg-zinc-800 hover:opacity-80 transition-all ease-in duration-100 rounded-[7px]">
                     <button className="flex justify-between items-center gap-2">
                         <CiLogout size={18} />
                         <p>Logout</p>
                     </button>
                 </div>
-                <DropdownMenuSeparator className='dark:bg-zinc-700' />
+                <DropdownMenuSeparator className='dark:bg-zinc-700 bg-zinc-300' />
                 <div className="flex text-sm items-center justify-center py-2">
                     <div className="flex justify-between items-center text-white cursor-pointer font-semibold bg-black dark:bg-white dark:text-black px-12 py-1 rounded-[6px]">
                         <p>Upgrade to Pro</p>
