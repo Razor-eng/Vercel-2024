@@ -14,7 +14,7 @@ import Link from 'next/link'
 type Props = {
     title: string,
     live: string,
-    days: string,
+    days: number,
     userName: string,
     email: string
 }

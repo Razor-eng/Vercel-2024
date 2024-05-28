@@ -27,12 +27,20 @@ type Props = {
 }
 
 export default function Overview({ loading, userName, email }: Props) {
+    const TopIcons = [
+        { icon: MdGridView }, { icon: IoList }
+    ]
+
     const [page, setPage] = useState(6);
     const [selectedView, setSelectedView] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const [addNew, setAddNew] = useState(false);
     const [sortby, setSortby] = useState('activity')
     const [Projects, setProjects] = useState<any>([]);
+
+    const setOpen = () => {
+        setAddNew(false);
+    }
 
     const fetchData = async () => {
         setProjects([]);
@@ -45,16 +53,18 @@ export default function Overview({ loading, userName, email }: Props) {
         })
     }
 
+    const days = (day: number) => {
+        let date1 = new Date(day).getTime();
+        let date2 = new Date().getTime();
+        let Difference_In_Time = date2 - date1;
+        let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
+        return Difference_In_Days;
+    }
+
     useEffect(() => {
         fetchData();
     }, [sortby, searchTerm])
-
-    const setOpen = () => {
-        setAddNew(false);
-    }
-    const TopIcons = [
-        { icon: MdGridView }, { icon: IoList }
-    ]
 
     return (
         <div className="bg-[#FAFAFA] flex-1 dark:bg-black md:py-[24px] py-4 md:px-20 px-3">
@@ -129,7 +139,7 @@ export default function Overview({ loading, userName, email }: Props) {
                                 {loading ?
                                     <GridCardSkeleton key={id} />
                                     :
-                                    <ProjectGridCard key={id} userName={project.addedBy} title={project?.projectName} days={'5d'} live={project?.projectLink} email={email} />
+                                    <ProjectGridCard key={id} userName={project.addedBy} title={project?.projectName} days={days(project.addedOn)} live={project?.projectLink} email={email} />
                                 }
                             </>
                         ))}
@@ -137,7 +147,7 @@ export default function Overview({ loading, userName, email }: Props) {
                     :
                     <div className="grid grid-cols-1 gap-6">
                         {Projects.map((project: any, id: number) => (
-                            <ProjectListCard userName={project.addedBy} title={project?.projectName} days={'5d'} live={project?.projectLink} email={email} key={id} />
+                            <ProjectListCard userName={project.addedBy} title={project?.projectName} days={days(project.addedOn)} live={project?.projectLink} email={email} key={id} />
                         ))}
                     </div>
                 }
